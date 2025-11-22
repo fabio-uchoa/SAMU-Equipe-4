@@ -1,0 +1,29 @@
+# --- Python & Dependências ---
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.venv/
+env/
+*.egg-info/
+
+# --- Jupyter Notebooks ---
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/
+
+# --- VS Code & IDEs ---
+.vscode/
+.idea/
+
+# --- Dados (Bloqueio de segurança) ---
+# Impede o envio de arquivos pesados ou sensíveis
+dados/
+data/
+*.csv
+*.xlsx
+*.json
+*.sql
+
+# --- Sistema Operacional ---
+.DS_Store
+Thumbs.db
