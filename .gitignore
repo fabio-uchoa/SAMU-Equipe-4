@@ -17,12 +17,8 @@ env/
 
 # --- Dados (Bloqueio de segurança) ---
 # Impede o envio de arquivos pesados ou sensíveis
-dados/
-data/
-*.csv
 *.xlsx
 *.json
-*.sql
 *.db
 
 # --- Sistema Operacional ---
