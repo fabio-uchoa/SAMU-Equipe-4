@@ -20,6 +20,8 @@ env/
 *.xlsx
 *.json
 *.db
+*.csv
+data/*csv
 
 # --- Sistema Operacional ---
 .DS_Store
