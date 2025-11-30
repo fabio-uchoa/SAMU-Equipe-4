@@ -20,44 +20,35 @@ O objetivo principal é implementar pipelines de **ETL (Extract, Transform, Load
 - **Ambiente de Desenvolvimento:** VS Code (Jupyter Notebooks)
 - **Versionamento:** Git
 
-📝 Tutorial: Como Rodar o Projeto SAMU (Modo Local)
-Este guia garante que todos tenham o banco de dados e o código rodando exatamente igual
+## 🚀 Tutorial: Como Rodar o Projeto (Modo Local)
 
-1. Instalação do Banco de Dados (PostgreSQL)
-Todos devem ter o PostgreSQL instalado na própria máquina.
+Para garantir que o código funcione na sua máquina exatamente como foi desenvolvido, siga este roteiro de configuração.
 
-Windows/Mac: Baixem e instalem do site oficial: postgresql.org/download
-
-Linux (Ubuntu/WSL):
-
-Bash
-
-sudo apt update
-sudo apt install postgresql postgresql-contrib
-sudo service postgresql start
+### 1. Instalação do Banco de Dados
+Todos os membros devem ter o **PostgreSQL** instalado.
+* **Windows/Mac:** [Download Oficial](https://www.postgresql.org/download/)
+* **Linux (Ubuntu/WSL):**
+  ```bash
+  sudo apt update
+  sudo apt install postgresql postgresql-contrib
+  sudo service postgresql start
 2. Configuração da Senha (IMPORTANTE)
-Para o código funcionar sem alteração, definam a senha do usuário postgres como admin123 (ou combinem outra senha, mas todos devem usar a mesma, ou criar o arquivo .env).
+Para o código conectar automaticamente, o projeto foi configurado com a senha padrão admin123.
 
-No Terminal/Prompt:
+Abra o terminal e rode:
 
 Bash
 
 # Entra no console do Postgres
-sudo -u postgres psql  # (No Windows procure por 'SQL Shell psql')
+sudo -u postgres psql  # (No Windows use o 'SQL Shell psql')
+Dentro do console SQL, digite:
 
-# Altera a senha
+SQL
+
 ALTER USER postgres PASSWORD 'admin123';
-
-# Sai
 \q
 3. Configuração do VS Code
-Instalem a extensão SQLTools no VS Code para visualizar o banco.
-
-Extensões -> Busque "SQLTools" -> Instale.
-
-Busque "SQLTools PostgreSQL Driver" -> Instale.
-
-Crie uma nova conexão:
+Instale a extensão SQLTools e o PostgreSQL Driver no VS Code. Crie uma conexão com estes dados:
 
 Name: Samu Local
 
@@ -69,50 +60,41 @@ User: postgres
 
 Password: admin123
 
-4. Criando a Estrutura do Banco (Gavetas Vazias)
-Antes de rodar qualquer Python, o banco precisa das tabelas vazias.
+4. Criando a Estrutura (Gavetas Vazias)
+Antes de rodar o Python, é necessário criar as tabelas no banco:
 
-Abram a pasta sql/ do projeto no VS Code.
+Abra a pasta sql/ no VS Code.
 
-Abram o arquivo estrutura_dw.sql.
+Abra o arquivo estrutura_dw.sql e clique em Run (Play) no topo.
 
-Clique em "Run on Active Connection" (Play).
+Isso cria o schema dw (para o ELT).
 
-Isso cria o schema dw e as tabelas do ELT.
+Abra o arquivo estrutura_dw_etl.sql e clique em Run (Play) no topo.
 
-Abram o arquivo estrutura_dw_etl.sql.
-
-Clique em "Run on Active Connection".
-
-Isso cria o schema dw_etl e as tabelas do ETL.
+Isso cria o schema dw_etl (para o ETL).
 
 5. Configuração do Python
-Abram o terminal na pasta do projeto.
-
-Criem e ativem o ambiente virtual (opcional, mas recomendado):
+No terminal do projeto, instale as dependências:
 
 Bash
 
+# Criar ambiente virtual (Opcional)
 python -m venv venv
-# Windows: venv\Scripts\activate
-# Linux/Mac: source venv/bin/activate
-Instalem as bibliotecas:
 
-Bash
-
+# Instalar bibliotecas
 pip install -r requirements.txt
-6. Rodando os Processos (Carga de Dados)
-Agora que o banco existe (passo 4) e o Python está pronto (passo 5), é só rodar os notebooks para encher o banco.
+6. Executando a Carga de Dados
+Agora que o ambiente está pronto, rode os notebooks na ordem para popular o banco:
 
-Abram notebooks/ELT.ipynb -> Cliquem em "Run All".
+▶️ Abra notebooks/ELT.ipynb e clique em Run All.
 
-Vai ler os CSVs e popular o schema dw (via SQL).
+Processa os dados via SQL e popula o dw.
 
-Abram notebooks/ETL.ipynb -> Cliquem em "Run All".
+▶️ Abra notebooks/ETL.ipynb e clique em Run All.
 
-Vai ler os CSVs e popular o schema dw_etl (via Pandas).
+Processa os dados via Pandas e popula o dw_etl.
 
-7. Conferência Final
-Abram o arquivo notebooks/analises_insights.ipynb e rodem tudo.
+7. Validação Final
+Abra notebooks/analises_insights.ipynb e rode todas as células.
 
-Se aparecerem os gráficos e a mensagem "SUCESSO ABSOLUTO", parabéns! O ambiente local está idêntico.
+Se os gráficos aparecerem e o relatório comparativo mostrar "SUCESSO", seu ambiente está configurado corretamente! ✅
