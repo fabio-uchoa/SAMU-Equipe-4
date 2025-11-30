@@ -20,82 +20,151 @@ O objetivo principal é implementar pipelines de **ETL (Extract, Transform, Load
 - **Ambiente de Desenvolvimento:** VS Code (Jupyter Notebooks)
 - **Versionamento:** Git
 
-## 🚀 Tutorial: Como Rodar o Projeto (Modo Local)
+# 🚀 Tutorial: Como Rodar o Projeto (Modo Local)
 
 Para garantir que o código funcione na sua máquina exatamente como foi desenvolvido, siga este roteiro de configuração.
 
-### 1. Instalação do Banco de Dados
-Todos os membros devem ter o **PostgreSQL** instalado.
-* **Windows/Mac:** [Download Oficial](https://www.postgresql.org/download/)
-* **Linux (Ubuntu/WSL):**
-  ```bash
-  sudo apt update
-  sudo apt install postgresql postgresql-contrib
-  sudo service postgresql start
-2. Configuração da Senha (IMPORTANTE)
-Para o código conectar automaticamente, o projeto foi configurado com a senha padrão admin123.
+---
+
+## 1. Instalação do Banco de Dados
+
+Todos os membros devem ter o PostgreSQL instalado.
+
+### Windows / Mac
+- Download Oficial do PostgreSQL
+
+### Linux (Ubuntu/WSL)
+
+```bash
+sudo apt update
+sudo apt install postgresql postgresql-contrib
+sudo service postgresql start
+```
+
+---
+
+## 2. Configuração da Senha (IMPORTANTE)
+
+Para o código conectar automaticamente, o projeto foi configurado com a senha padrão:
+
+```text
+admin123
+```
 
 Abra o terminal e rode:
 
-Bash
-
+```bash
 # Entra no console do Postgres
-sudo -u postgres psql  # (No Windows use o 'SQL Shell psql')
+sudo -u postgres psql  
+# (No Windows procure por 'SQL Shell psql')
+```
+
 Dentro do console SQL, digite:
 
-SQL
-
+```sql
 ALTER USER postgres PASSWORD 'admin123';
+\q
+```
 
+---
 
-3. Configuração do VS Code
-Instale a extensão SQLTools e o PostgreSQL Driver no VS Code. Crie uma conexão com estes dados:
+## 3. Configuração do VS Code
 
-Name: Samu Local
+Instale as extensões abaixo:
 
-Server: localhost
+- SQLTools  
+- PostgreSQL Driver  
 
-Database: postgres
+Crie uma conexão com os seguintes dados:
 
-User: postgres
+```text
+Name: Samu Local  
+Server: localhost  
+Database: postgres  
+User: postgres  
+Password: admin123  
+```
 
-Password: admin123
+---
 
-4. Criando a Estrutura (Gavetas Vazias)
+## 4. Criando a Estrutura (Gavetas Vazias)
+
 Antes de rodar o Python, é necessário criar as tabelas no banco:
 
-Abra a pasta sql/ no VS Code.
+1. Abra a pasta `sql/` no VS Code.
+2. Abra o arquivo `estrutura_dw.sql` e clique em **Run (Play)** no topo.  
+   - Isso cria o schema `dw` (para o ELT).
+3. Abra o arquivo `estrutura_dw_etl.sql` e clique em **Run (Play)** no topo.  
+   - Isso cria o schema `dw_etl` (para o ETL).
 
-Abra o arquivo estrutura_dw.sql e clique em Run (Play) no topo.
+---
 
-Isso cria o schema dw (para o ELT).
+## 5. Configuração do Python
 
-Abra o arquivo estrutura_dw_etl.sql e clique em Run (Play) no topo.
-
-Isso cria o schema dw_etl (para o ETL).
-
-5. Configuração do Python
 No terminal do projeto, instale as dependências:
 
-Bash
-
+```bash
 # Criar ambiente virtual (Opcional)
 python -m venv venv
+```
 
-# Instalar bibliotecas
+Ativar o ambiente virtual:
+
+### Windows
+```bash
+.\venv\Scripts\Activate
+```
+
+### Linux
+```bash
+source venv/bin/activate
+```
+
+Instalar as bibliotecas:
+
+```bash
 pip install -r requirements.txt
-6. Executando a Carga de Dados
+```
+
+---
+
+## 6. Executando a Carga de Dados
+
 Agora que o ambiente está pronto, rode os notebooks na ordem para popular o banco:
 
-▶️ Abra notebooks/ELT.ipynb e clique em Run All.
+▶️ Abra `notebooks/ELT.ipynb` e clique em **Run All**  
+- Processa os dados via SQL e popula o `dw`.
 
-Processa os dados via SQL e popula o dw.
+▶️ Abra `notebooks/ETL.ipynb` e clique em **Run All**  
+- Processa os dados via Pandas e popula o `dw_etl`.
 
-▶️ Abra notebooks/ETL.ipynb e clique em Run All.
+---
 
-Processa os dados via Pandas e popula o dw_etl.
+## 7. Validação Final
 
-7. Validação Final
-Abra notebooks/analises_insights.ipynb e rode todas as células.
+Abra `notebooks/analises_insights.ipynb` e rode todas as células.
 
-Se os gráficos aparecerem e o relatório comparativo mostrar "SUCESSO", seu ambiente está configurado corretamente! ✅
+Se os gráficos aparecerem e o relatório comparativo mostrar:
+
+```text
+SUCESSO
+```
+
+Seu ambiente está configurado corretamente e os dados batem 100%! ✅
+
+---
+
+# 📊 Modelagem de Dados (Star Schema)
+
+O Data Warehouse segue a modelagem dimensional com as seguintes tabelas:
+
+## 🧾 Tabela Fato
+- `fato_atendimentos` (Métricas e Chaves)
+
+## 📐 Tabelas Dimensão
+- `dim_localidade` (Município, Bairro)
+- `dim_tempo` (Data, Ano, Dia da Semana, Turno)
+- `dim_ocorrencia` (Tipo, Subtipo, Origem)
+- `dim_situacao` (Desfecho, Finalização)
+- `dim_paciente` (Sexo, Faixa Etária)
+
