@@ -46,7 +46,8 @@ Dentro do console SQL, digite:
 SQL
 
 ALTER USER postgres PASSWORD 'admin123';
-\q
+
+
 3. Configuração do VS Code
 Instale a extensão SQLTools e o PostgreSQL Driver no VS Code. Crie uma conexão com estes dados:
 
