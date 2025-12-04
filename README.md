@@ -91,7 +91,7 @@ Password: admin123
 
 Antes de rodar o Python, é necessário criar as tabelas no banco:
 
-1. Abra a pasta `sql/` no VS Code.
+1. Abra a pasta `database/` no VS Code.
 2. Abra o arquivo `estrutura_dw.sql` e clique em **Run (Play)** no topo.  
    - Isso cria o schema `dw` (para o ELT).
 3. Abra o arquivo `estrutura_dw_etl.sql` e clique em **Run (Play)** no topo.  
