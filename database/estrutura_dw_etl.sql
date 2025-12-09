@@ -62,5 +62,7 @@ CREATE TABLE dw_etl.fato_atendimentos (
     -- Metricas
     hora_exata TIME,
     idade_paciente INTEGER,
+    turno VARCHAR(20),
+    
     qtd_atendimentos INTEGER DEFAULT 1
 );

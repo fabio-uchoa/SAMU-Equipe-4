@@ -2,7 +2,6 @@
 CREATE SCHEMA IF NOT EXISTS dw;
 
 -- Dimensao Localidade
--- Armazena Municipio e Bairro
 DROP TABLE IF EXISTS dw.dim_localidade CASCADE;
 CREATE TABLE dw.dim_localidade (
     id_local SERIAL PRIMARY KEY,
@@ -11,7 +10,6 @@ CREATE TABLE dw.dim_localidade (
 );
 
 -- Dimensao Ocorrencia
--- Armazena Origem do Chamado, Tipo e Subtipo
 DROP TABLE IF EXISTS dw.dim_ocorrencia CASCADE;
 CREATE TABLE dw.dim_ocorrencia (
     id_ocorrencia SERIAL PRIMARY KEY,
@@ -21,7 +19,6 @@ CREATE TABLE dw.dim_ocorrencia (
 );
 
 -- Dimensao Situacao
--- Armazena Motivo da Finalizacao e Desfecho
 DROP TABLE IF EXISTS dw.dim_situacao CASCADE;
 CREATE TABLE dw.dim_situacao (
     id_situacao SERIAL PRIMARY KEY,
@@ -30,7 +27,6 @@ CREATE TABLE dw.dim_situacao (
 );
 
 -- Dimensao Paciente
--- Armazena Sexo e a Faixa Etaria calculada
 DROP TABLE IF EXISTS dw.dim_paciente CASCADE;
 CREATE TABLE dw.dim_paciente (
     id_paciente SERIAL PRIMARY KEY,
@@ -39,7 +35,6 @@ CREATE TABLE dw.dim_paciente (
 );
 
 -- Dimensao Tempo
--- Armazena datas expandidas
 DROP TABLE IF EXISTS dw.dim_tempo CASCADE;
 CREATE TABLE dw.dim_tempo (
     id_tempo SERIAL PRIMARY KEY,
@@ -53,7 +48,6 @@ CREATE TABLE dw.dim_tempo (
 );
 
 -- Tabela Fato Atendimentos
--- Conecta todas as dimensoes e guarda as metricas
 DROP TABLE IF EXISTS dw.fato_atendimentos CASCADE;
 CREATE TABLE dw.fato_atendimentos (
     id_fato SERIAL PRIMARY KEY,
@@ -65,8 +59,10 @@ CREATE TABLE dw.fato_atendimentos (
     fk_paciente INTEGER REFERENCES dw.dim_paciente(id_paciente),
     fk_tempo INTEGER REFERENCES dw.dim_tempo(id_tempo),
     
-    -- Metricas e Dados Degenerados
+    -- Metricas
     hora_exata TIME,
     idade_paciente INTEGER,
+    turno VARCHAR(20), 
+    
     qtd_atendimentos INTEGER DEFAULT 1
 );
